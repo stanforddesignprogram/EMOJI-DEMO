@@ -9,6 +9,7 @@ public class GlobalScript : MonoBehaviour {
     public GameObject selectedObject;
 
     private string message = "";
+    private Vector3 INITIAL_SCALE_VECTOR = new Vector3(1.0f, 1.0f, 1.0f);
 
 	// Use this for initialization
 	void Start () {
@@ -37,16 +38,36 @@ public class GlobalScript : MonoBehaviour {
         if (Physics.Raycast(rayDirection, out hit))
         {
             GameObject hitObject = hit.collider.transform.gameObject;
-            message = hitObject.name;
+            //message = hitObject.name;
             if (hitObject.GetComponent<Collider>().tag == "Emoji")
             {
-                message += " EMOJI!";
+                message = hitObject.name;
                 if (selectedObject != hitObject)
                 {
+                    // Don't wait for pulsing to end
+                    StopPulse();
+
+                    // Reset pulsing object scale
+                    if (selectedObject) selectedObject.transform.localScale = INITIAL_SCALE_VECTOR;
+
                     selectedObject = hitObject;
                 }
+                Pulse(selectedObject);
             }
         }
+    }
+
+    void StopPulse()
+    {
+        iTween.Stop();
+    }
+
+    void Pulse(GameObject gameObject)
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("amount", new Vector3(0.3f, 0.3f, 0.3f));
+        hash.Add("time", 1.0f);
+        iTween.PunchScale(gameObject, hash);
     }
 
     void OnGUI()
