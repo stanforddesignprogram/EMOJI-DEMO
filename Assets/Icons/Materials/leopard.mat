@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: leopard
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -16,13 +16,43 @@ Material:
     serializedVersion: 2
     m_TexEnvs:
     - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _MainTex
       second:
         m_Texture: {fileID: 2800000, guid: 5698c42751acbee4ab750cecabedfabb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Floats: []
+    m_Floats:
+    - first:
+        name: _Darken
+      second: 0
+    - first:
+        name: _SeeThru
+      second: 0.25
+    - first:
+        name: _Shininess
+      second: 0.078125
+    - first:
+        name: g_flOutlineWidth
+      second: 0.005
     m_Colors:
     - first:
         name: _Color
       second: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+    - first:
+        name: _SceneTint
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - first:
+        name: _TintColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: g_vOutlineColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

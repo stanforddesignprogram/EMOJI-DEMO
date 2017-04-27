@@ -473,6 +473,10 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   cloudProjectId: dd5022f5-bab3-493f-92d2-7a42a8330aa7
   projectName: EMOJI-DEMO
