@@ -171,6 +171,7 @@ namespace VRStandardAssets.Utils
                 } else
                 {
                     if (m_Reticle) m_Reticle.ChangeColor(false);
+                    if (selectedObject != null) FadeOut(selectedStatus);
                 }
             }
             else
