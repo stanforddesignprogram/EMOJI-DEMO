@@ -27,27 +27,14 @@ namespace VRStandardAssets.Utils
         private VRInteractiveItem m_LastInteractible;                   //The last interactive item
 
         private GameObject selectedObject;
+        private GameObject selectedStatus;
         private string message = "";
-        private Color startColor;
         private Vector3 INITIAL_SCALE_VECTOR = new Vector3(0.5f, 0.5f, 0.5f);
 
         // Use this for initialization
         void Start()
         {
             message = "Started";
-        }
-
-        void StopPulse()
-        {
-            iTween.Stop();
-        }
-
-        void Pulse(GameObject gameObject)
-        {
-            Hashtable hash = new Hashtable();
-            hash.Add("amount", new Vector3(0.25f, 0.25f, 0.25f));
-            hash.Add("time", 1.0f);
-            iTween.PunchScale(gameObject, hash);
         }
 
         // Utility for other classes to get the current interactive item
@@ -80,7 +67,29 @@ namespace VRStandardAssets.Utils
             EyeRaycast();
         }
 
-      
+        void StopPulse()
+        {
+            iTween.Stop();
+        }
+
+        void Pulse(GameObject gameObject)
+        {
+            Hashtable hash = new Hashtable();
+            hash.Add("amount", new Vector3(0.25f, 0.25f, 0.25f));
+            hash.Add("time", 1.0f);
+            iTween.PunchScale(gameObject, hash);
+        }
+
+        void FadeIn(GameObject gameObject)
+        {
+            iTween.FadeUpdate(gameObject, 1.0f, 1.0f);
+        }
+
+        void FadeOut(GameObject gameObject)
+        {
+            iTween.FadeUpdate(gameObject, 0.0f, 0.6f);
+        }
+
         private void EyeRaycast()
         {
             // Show the debug ray if required
@@ -122,18 +131,33 @@ namespace VRStandardAssets.Utils
 
                     GameObject hitObject = hit.collider.transform.gameObject;
 
-                    message = hitObject.name;
+                    //message = hitObject.name;
                     Transform emoji = null;
+                    Transform status = null;
                     foreach (Transform child in hitObject.transform)
                     {
                         if (child.tag == "Emoji")
                         {
                             emoji = child;
                         }
+                        if (child.tag == "Status")
+                        {
+                            status = child;
+                            selectedStatus = child.gameObject;
+                        }
                     }
+
+                    // Pulse object
+                    Pulse(emoji.gameObject);
+
+                    // Show status
+                    FadeIn(status.gameObject);
 
                     if (selectedObject != hitObject)
                     {
+                        // Hide previous status
+                        FadeOut(selectedStatus);
+                        
                         // Don't wait for pulsing to end
                         StopPulse();
 
@@ -142,9 +166,6 @@ namespace VRStandardAssets.Utils
 
                         selectedObject = hitObject;
                     }
-
-                    // Pulse object
-                    Pulse(emoji.gameObject);
                 }
             }
             else
@@ -152,6 +173,9 @@ namespace VRStandardAssets.Utils
                 // Nothing was hit, deactive the last interactive item.
                 DeactiveLastInteractible();
                 m_CurrentInteractible = null;
+
+                // Hide previous status
+                if (selectedObject != null) FadeOut(selectedStatus);
 
                 // Position the reticle at default distance.
                 if (m_Reticle)
