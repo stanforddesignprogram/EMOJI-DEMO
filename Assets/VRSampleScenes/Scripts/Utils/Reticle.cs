@@ -66,9 +66,6 @@ namespace VRStandardAssets.Utils
 
             // The rotation should just be the default.
             m_ReticleTransform.localRotation = m_OriginalRotation;
-
-            // Sets default reticle color
-            ChangeColor(false);
         }
 
 
