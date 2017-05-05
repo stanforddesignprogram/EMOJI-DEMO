@@ -34,7 +34,7 @@ namespace VRStandardAssets.Utils
         // Use this for initialization
         void Start()
         {
-            message = "Started";
+            //message = "Started";
         }
 
         // Utility for other classes to get the current interactive item
@@ -105,25 +105,27 @@ namespace VRStandardAssets.Utils
             // Do the raycast forweards to see if we hit an interactive item
             if (Physics.Raycast(ray, out hit, m_RayLength, ~m_ExclusionLayers))
             {
-                VRInteractiveItem interactible = hit.collider.GetComponent<VRInteractiveItem>(); //attempt to get the VRInteractiveItem on the hit object
-                m_CurrentInteractible = interactible;
+                //VRInteractiveItem interactible = hit.collider.GetComponent<VRInteractiveItem>(); //attempt to get the VRInteractiveItem on the hit object
+                //m_CurrentInteractible = interactible;
 
-                // If we hit an interactive item and it's not the same as the last interactive item, then call Over
-                if (interactible && interactible != m_LastInteractible)
-                    interactible.Over(); 
+                //// If we hit an interactive item and it's not the same as the last interactive item, then call Over
+                //if (interactible && interactible != m_LastInteractible)
+                //    interactible.Over(); 
 
-                // Deactive the last interactive item 
-                if (interactible != m_LastInteractible)
-                    DeactiveLastInteractible();
+                //// Deactive the last interactive item 
+                //if (interactible != m_LastInteractible)
+                //    DeactiveLastInteractible();
 
-                m_LastInteractible = interactible;
+                //m_LastInteractible = interactible;
 
-                if (OnRaycasthit != null)
-                    OnRaycasthit(hit);
+                //if (OnRaycasthit != null)
+                //    OnRaycasthit(hit);
 
                 // Something was hit, set at the hit position.
                 if (m_Reticle)
+                {
                     m_Reticle.SetPosition(hit);
+                }
 
                 if (hit.collider.tag == "Actor")
                 {
@@ -166,13 +168,16 @@ namespace VRStandardAssets.Utils
 
                         selectedObject = hitObject;
                     }
+                } else
+                {
+                    if (m_Reticle) m_Reticle.ChangeColor(false);
                 }
             }
             else
             {
                 // Nothing was hit, deactive the last interactive item.
-                DeactiveLastInteractible();
-                m_CurrentInteractible = null;
+                //DeactiveLastInteractible();
+                //m_CurrentInteractible = null;
 
                 // Hide previous status
                 if (selectedObject != null) FadeOut(selectedStatus);
