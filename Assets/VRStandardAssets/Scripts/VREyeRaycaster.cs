@@ -29,7 +29,7 @@ namespace VRStandardAssets.Utils
         private GameObject selectedObject;
         private GameObject selectedStatus;
         private string message = "";
-        private Vector3 INITIAL_SCALE_VECTOR = new Vector3(0.5f, 0.5f, 0.5f);
+        private Vector3 INITIAL_SCALE_VECTOR = new Vector3(0.4f, 0.4f, 0.4f);
 
         // Use this for initialization
         void Start()
