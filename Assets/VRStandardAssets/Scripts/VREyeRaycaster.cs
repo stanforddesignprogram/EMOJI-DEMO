@@ -109,24 +109,26 @@ namespace VRStandardAssets.Utils
 
                 m_LastInteractible = interactible;
 
+                if (OnRaycasthit != null)
+                    OnRaycasthit(hit);
+
                 // Something was hit, set at the hit position.
                 if (m_Reticle)
                     m_Reticle.SetPosition(hit);
 
-                if (OnRaycasthit != null)
-                    OnRaycasthit(hit);
-
                 if (hit.collider.tag == "Actor")
                 {
+                    if (m_Reticle) m_Reticle.ChangeColor(true);
+
                     GameObject hitObject = hit.collider.transform.gameObject;
 
                     message = hitObject.name;
-                    GameObject emoji = null;
+                    Transform emoji = null;
                     foreach (Transform child in hitObject.transform)
                     {
                         if (child.tag == "Emoji")
                         {
-                            emoji = child.gameObject;
+                            emoji = child;
                         }
                     }
 
@@ -135,19 +137,14 @@ namespace VRStandardAssets.Utils
                         // Don't wait for pulsing to end
                         StopPulse();
 
-                        // Reset pulsing object scale AND object color
+                        // Reset pulsing object scale
                         emoji.transform.localScale = INITIAL_SCALE_VECTOR;
-                        //if (selectedObject != null && startColor != null) selectedObject.GetComponent<Renderer>().material.color = startColor;
 
                         selectedObject = hitObject;
                     }
 
-                    // Highlight object
-                    //startColor = hitObject.GetComponent<Renderer>().material.color;
-                    //hitObject.GetComponent<Renderer>().material.color = Color.yellow;
-
                     // Pulse object
-                    Pulse(emoji);
+                    Pulse(emoji.gameObject);
                 }
             }
             else
@@ -158,7 +155,10 @@ namespace VRStandardAssets.Utils
 
                 // Position the reticle at default distance.
                 if (m_Reticle)
+                {
                     m_Reticle.SetPosition();
+                    m_Reticle.ChangeColor(false);
+                }
             }
         }
 

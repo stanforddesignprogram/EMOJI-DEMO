@@ -13,7 +13,6 @@ public class GlobalScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //Status.eulerAngles = new Vector3(STATUS_DEFAULT_ROTATION[0], SteamCamera.eulerAngles[1], STATUS_DEFAULT_ROTATION[2]);
         Status.LookAt(2 * Status.position - SteamCamera.position);
     }
 }

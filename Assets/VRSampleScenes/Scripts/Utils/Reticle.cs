@@ -68,7 +68,7 @@ namespace VRStandardAssets.Utils
             m_ReticleTransform.localRotation = m_OriginalRotation;
 
             // Sets default reticle color
-            m_ReticleTransform.gameObject.GetComponent<Image>().color = m_DefaultColor;
+            ChangeColor(false);
         }
 
 
@@ -77,11 +77,7 @@ namespace VRStandardAssets.Utils
         {
             m_ReticleTransform.position = hit.point;
             m_ReticleTransform.localScale = m_OriginalScale * hit.distance;
-
-            // Sets hit color if hitting ACTOR
-            m_ReticleTransform.gameObject.GetComponent<Image>().color =
-                hit.collider.tag == "Actor" ? m_HitColor : m_DefaultColor;
-
+ 
             // If the reticle should use the normal of what has been hit...
             if (m_UseNormal)
                 // ... set it's rotation based on it's forward vector facing along the normal.
@@ -89,6 +85,12 @@ namespace VRStandardAssets.Utils
             else
                 // However if it isn't using the normal then it's local rotation should be as it was originally.
                 m_ReticleTransform.localRotation = m_OriginalRotation;
+        }
+
+        // Sets color of reticle to default or HIT
+        public void ChangeColor (bool hit)
+        {
+            m_Image.color = hit ? m_HitColor : m_DefaultColor;
         }
     }
 }
