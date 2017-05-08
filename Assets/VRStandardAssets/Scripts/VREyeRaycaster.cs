@@ -134,6 +134,7 @@ namespace VRStandardAssets.Utils
                     GameObject hitObject = hit.collider.transform.gameObject;
 
                     //message = hitObject.name;
+
                     Transform emoji = hitObject.transform.Find("Emoji");
                     Transform status = hitObject.transform.Find("Status");
                     selectedStatus = status.gameObject;
@@ -159,6 +160,10 @@ namespace VRStandardAssets.Utils
                     }
                 } else
                 {
+                    // Something hit, but not actor
+
+                    //message = "";
+
                     if (m_Reticle) m_Reticle.ChangeColor(false);
                     if (selectedObject != null) FadeOut(selectedStatus);
                 }
@@ -168,6 +173,8 @@ namespace VRStandardAssets.Utils
                 // Nothing was hit, deactive the last interactive item.
                 //DeactiveLastInteractible();
                 //m_CurrentInteractible = null;
+
+                //message = "";
 
                 // Hide previous status
                 if (selectedObject != null) FadeOut(selectedStatus);
