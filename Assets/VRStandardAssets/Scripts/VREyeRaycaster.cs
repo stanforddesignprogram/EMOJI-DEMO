@@ -29,7 +29,7 @@ namespace VRStandardAssets.Utils
         private GameObject selectedObject;
         private GameObject selectedStatus;
         private string message = "";
-        private Vector3 INITIAL_SCALE_VECTOR = new Vector3(0.4f, 0.4f, 0.4f);
+        private Vector3 EMOJI_INITIAL_SCALE_VECTOR = new Vector3(0.15f, 0.15f, 0.15f);
 
         // Use this for initialization
         void Start()
@@ -75,7 +75,7 @@ namespace VRStandardAssets.Utils
         void Pulse(GameObject gameObject)
         {
             Hashtable hash = new Hashtable();
-            hash.Add("amount", new Vector3(0.25f, 0.25f, 0.25f));
+            hash.Add("amount", new Vector3(0.05f, 0.05f, 0.05f));
             hash.Add("time", 1.0f);
             iTween.PunchScale(gameObject, hash);
         }
@@ -134,24 +134,13 @@ namespace VRStandardAssets.Utils
                     GameObject hitObject = hit.collider.transform.gameObject;
 
                     //message = hitObject.name;
-                    Transform emoji = null;
-                    Transform status = null;
-                    foreach (Transform child in hitObject.transform)
-                    {
-                        if (child.tag == "Emoji")
-                        {
-                            emoji = child;
-                        }
-                        if (child.tag == "Status")
-                        {
-                            status = child;
-                            selectedStatus = child.gameObject;
-                        }
-                    }
+                    Transform emoji = hitObject.transform.Find("Emoji");
+                    Transform status = hitObject.transform.Find("Status");
+                    selectedStatus = status.gameObject;
 
                     // Pulse object
                     Pulse(emoji.gameObject);
-
+                    
                     // Show status
                     FadeIn(status.gameObject);
 
@@ -164,7 +153,7 @@ namespace VRStandardAssets.Utils
                         StopPulse();
 
                         // Reset pulsing object scale
-                        emoji.transform.localScale = INITIAL_SCALE_VECTOR;
+                        emoji.transform.localScale = EMOJI_INITIAL_SCALE_VECTOR;
 
                         selectedObject = hitObject;
                     }
