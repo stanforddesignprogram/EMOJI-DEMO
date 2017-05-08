@@ -139,7 +139,7 @@ namespace VRStandardAssets.Utils
                     selectedStatus = status.gameObject;
 
                     // Pulse object
-                    Pulse(emoji.gameObject);
+                    if (emoji) Pulse(emoji.gameObject);
                     
                     // Show status
                     FadeIn(status.gameObject);
@@ -153,7 +153,7 @@ namespace VRStandardAssets.Utils
                         StopPulse();
 
                         // Reset pulsing object scale
-                        emoji.transform.localScale = EMOJI_INITIAL_SCALE_VECTOR;
+                        if (emoji) emoji.transform.localScale = EMOJI_INITIAL_SCALE_VECTOR;
 
                         selectedObject = hitObject;
                     }
